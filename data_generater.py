@@ -22,7 +22,6 @@ class DataGnerater():
         self.zp_post_vec_mask = numpy.load(data_path+"zp_post_mask.npy")
         self.zp_pre = numpy.load(data_path+"zp_pre.npy")
         self.zp_pre_vec_mask = numpy.load(data_path+"zp_pre_mask.npy")
-
         read_f = file(data_path + "zp_candi_pair_info","rb")
         zp_candis_pair = cPickle.load(read_f)
         read_f.close()
@@ -86,14 +85,12 @@ class DataGnerater():
             this_batch["fl"] = self.ifl_vec[ci_s:ci_e]
             this_batch["start2end"] = s2e
             self.data_batch.append(this_batch)
-
     def devide(self,k=0.2):
         random.shuffle(self.data_batch)
         length = int(len(self.data_batch)*k)
         self.dev = self.data_batch[:length]
         self.train = self.data_batch[length:]
         self.data_batch = self.train
-
     def generate_data(self,shuffle=False):
         if shuffle:
             random.shuffle(self.data_batch) 
@@ -111,16 +108,12 @@ class DataGnerater():
             info = "Total use %.3f seconds for %d/%d -- EST:%f , Left:%f"%(end_time-start_time,done_num,total_num,EST,EST-estimate_time)
             sys.stderr.write(info+"\r")
         print >> sys.stderr
-
-
     def generate_dev_data(self,shuffle=False):
         if shuffle:
             random.shuffle(self.dev) 
-
         estimate_time = 0.0 
         done_num = 0 
         total_num = len(self.dev)
-
         for data in self.dev:
             start_time = timeit.default_timer()
             done_num += 1
@@ -131,5 +124,3 @@ class DataGnerater():
             info = "Total use %.3f seconds for %d/%d -- EST:%f , Left:%f"%(end_time-start_time,done_num,total_num,EST,EST-estimate_time)
             sys.stderr.write(info+"\r")
         print >> sys.stderr
-
-

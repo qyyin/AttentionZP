@@ -37,16 +37,6 @@ def net_copy(net,copy_from_net):
     for i in range(0, n):
         mcp[i].data[:] = mp[i].data[:]
 
-def get_predict(data,t):
-    predict = []
-    for result,output in data:
-        max_index = -1
-        for i in range(len(output)):
-            if output[i] > t:
-                max_index = i
-        predict.append(result[max_index])
-    return predict
-
 def get_predict_max(data):
     predict = []
     for result,output in data:
